@@ -1,0 +1,54 @@
+body {
+    background: #ffffff;
+   text-align: center;
+   align-items: center;
+  margin: 5em;
+  
+ 
+}
+
+.icon {
+    width: 100px;
+}
+
+.row {
+    text-align: center;
+   
+}
+
+.bt-submit {
+    background-color: transparent;
+    border: transparent;
+}
+
+.btn {
+    background-color: black;
+    border: 1px solid white ;
+    border-radius: 3px;
+
+}
+
+.h2-title {
+    color: #292a2b;
+    font-family: monospace;
+    font-weight: 900;
+    
+}
+
+.p-title {
+    font-size: 2em;
+    font-family: monospace;
+    font-weight: 900
+}
+
+.hr-main {
+    border: 2px solid black;
+    border-radius: 1200px 10px;
+    width: 100%;
+    
+}
+
+.container {
+    max-width: 870px;
+}
+
