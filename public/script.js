@@ -11,6 +11,7 @@ const textDeInvalidation = document.getElementById("invalidCEP");
 const erroIdade = document.getElementById("erroIdade");
 
 let enderecoValido = false;
+
 function validarIdade() {
   return parseInt(idade.value) >= 18;
 }
@@ -28,6 +29,7 @@ cep.addEventListener("blur", async () => {
 
 formulario.addEventListener("submit", async function (evento) {
   evento.preventDefault();
+
   const cepValido = await verificarCep();
   const idadeValida = validarIdade();
 
@@ -37,7 +39,7 @@ formulario.addEventListener("submit", async function (evento) {
   }
 
   if (!idadeValida) {
-    erroIdade.innerHTML = 'Voce nao pode se cadastrar, pois e menor de 18 anos';
+    erroIdade.innerHTML = 'Você não pode se cadastrar, pois é menor de 18 anos';
     idade.focus();
     return;
   } else {
@@ -47,59 +49,34 @@ formulario.addEventListener("submit", async function (evento) {
   const formData = new FormData(formulario);
   const dados = Object.fromEntries(formData.entries());
 
- try {
-  const resposta = await fetch('https://formulario-nodemailer.onrender.com/enviar', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(dados)
-  });
+  try {
+    const resposta = await fetch('https://formulario-nodemailer.onrender.com/enviar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dados)
+    });
 
-  const mensagemDiv = document.getElementById('mensagem');
+    const mensagemDiv = document.getElementById('mensagem');
 
-  if (resposta.ok) {
-    mensagemDiv.textContent = 'Email enviado com sucesso!';
-    mensagemDiv.style.color = 'green';
-    formulario.reset();
-  } else {
-    mensagemDiv.textContent = 'Erro ao enviar o email.';
-    mensagemDiv.style.color = 'red';
+    if (resposta.ok) {
+      mensagemDiv.textContent = 'Email enviado com sucesso!';
+      mensagemDiv.style.color = 'green';
+      formulario.reset();
+    } else {
+      mensagemDiv.textContent = 'Erro ao enviar o email.';
+      mensagemDiv.style.color = 'red';
+    }
+  } catch (erro) {
+    console.error('Erro na requisição:', erro);
+    document.getElementById('mensagem').textContent = 'Erro na conexão com o servidor.';
   }
-} catch (erro) {
-  console.error('Erro na requisicao:', erro);
-  document.getElementById('mensagem').textContent = 'Erro na conexao com o servidor.';
-}
-
 });
-
-
-
-try {
-  const resposta = await fetch('https://formulario-nodemailer.onrender.com/enviar', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(dados)
-  });
-
-  const mensagemDiv = document.getElementById('mensagem');
-
-  if (resposta.ok) {
-    mensagemDiv.textContent = 'Email enviado com sucesso!';
-    mensagemDiv.style.color = 'green';
-    formulario.reset();
-  } else {
-    mensagemDiv.textContent = 'Erro ao enviar o email.';
-    mensagemDiv.style.color = 'red';
-  }
-} catch (erro) {
-  console.error('Erro na requisicao:', erro);
-  document.getElementById('mensagem').textContent = 'Erro na conexao com o servidor.';
-}
 
 async function verificarCep() {
   const cepNumeros = cep.value.replace(/\D/g, '');
 
   if (cepNumeros.length !== 8) {
-    textDeInvalidation.innerHTML = "CEP invalido";
+    textDeInvalidation.innerHTML = "CEP inválido";
     return false;
   }
 
@@ -108,7 +85,7 @@ async function verificarCep() {
     const data = await response.json();
 
     if (data.erro) {
-      textDeInvalidation.innerHTML = "CEP nao encontrado.";
+      textDeInvalidation.innerHTML = "CEP não encontrado.";
       return false;
     }
 
@@ -118,7 +95,9 @@ async function verificarCep() {
     cidade.value = data.localidade || "";
     estado.value = data.uf || "";
 
-    M.updateTextFields();
+    
+     M.updateTextFields();
+
     return true;
 
   } catch (error) {
