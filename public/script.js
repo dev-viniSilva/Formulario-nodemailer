@@ -47,29 +47,53 @@ formulario.addEventListener("submit", async function (evento) {
   const formData = new FormData(formulario);
   const dados = Object.fromEntries(formData.entries());
 
-  try {
-  fetch('https://formulario-nodemailer.onrender.com/enviar', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(dados)
-});
+ try {
+  const resposta = await fetch('https://formulario-nodemailer.onrender.com/enviar', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(dados)
+  });
 
+  const mensagemDiv = document.getElementById('mensagem');
 
-    const mensagemDiv = document.getElementById('mensagem');
-
-    if (resposta.ok) {
-      mensagemDiv.textContent = 'Email enviado com sucesso!';
-      mensagemDiv.style.color = 'green';
-      formulario.reset();
-    } else {
-      mensagemDiv.textContent = 'Erro ao enviar o email.';
-      mensagemDiv.style.color = 'red';
-    }
-  } catch (erro) {
-    console.error('Erro na requisicao:', erro);
-    document.getElementById('mensagem').textContent = 'Erro na conexao com o servidor.';
+  if (resposta.ok) {
+    mensagemDiv.textContent = 'Email enviado com sucesso!';
+    mensagemDiv.style.color = 'green';
+    formulario.reset();
+  } else {
+    mensagemDiv.textContent = 'Erro ao enviar o email.';
+    mensagemDiv.style.color = 'red';
   }
+} catch (erro) {
+  console.error('Erro na requisicao:', erro);
+  document.getElementById('mensagem').textContent = 'Erro na conexao com o servidor.';
+}
+
 });
+
+
+
+try {
+  const resposta = await fetch('https://formulario-nodemailer.onrender.com/enviar', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(dados)
+  });
+
+  const mensagemDiv = document.getElementById('mensagem');
+
+  if (resposta.ok) {
+    mensagemDiv.textContent = 'Email enviado com sucesso!';
+    mensagemDiv.style.color = 'green';
+    formulario.reset();
+  } else {
+    mensagemDiv.textContent = 'Erro ao enviar o email.';
+    mensagemDiv.style.color = 'red';
+  }
+} catch (erro) {
+  console.error('Erro na requisicao:', erro);
+  document.getElementById('mensagem').textContent = 'Erro na conexao com o servidor.';
+}
 
 async function verificarCep() {
   const cepNumeros = cep.value.replace(/\D/g, '');

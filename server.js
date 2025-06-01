@@ -9,6 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(cors({ origin: '*' }));
 
+
 // Serve arquivos estáticos da pasta public
 app.use(express.static(path.join(__dirname, 'public')));
 
