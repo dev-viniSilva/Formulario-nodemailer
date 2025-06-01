@@ -48,11 +48,12 @@ formulario.addEventListener("submit", async function (evento) {
   const dados = Object.fromEntries(formData.entries());
 
   try {
-    const resposta = await fetch('http://localhost:3000/enviar', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(dados)
-    });
+  fetch('https://formulario-nodemailer.onrender.com/enviar', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(dados)
+});
+
 
     const mensagemDiv = document.getElementById('mensagem');
 

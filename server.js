@@ -1,16 +1,16 @@
 require('dotenv').config();
 const express = require('express');
 const nodemailer = require('nodemailer');
+const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
 app.use(express.json());
-const cors = require('cors');
+app.use(cors({ origin: '*' }));
 
-app.use(cors({
-  origin: '*'
-}));
-
+// Serve arquivos estáticos da pasta public
+app.use(express.static(path.join(__dirname, 'public')));
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -19,6 +19,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SENHA
   }
 });
+
 app.get('/teste', (req, res) => {
   res.send('Servidor ativo');
 });
@@ -50,6 +51,7 @@ app.post('/enviar', async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log("Servidor rodando na porta 3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
